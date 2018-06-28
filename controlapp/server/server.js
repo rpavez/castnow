@@ -42,16 +42,16 @@ else {
 }
 
 const fork = require('child_process').fork;
-let child;
+let castnowProcess;
 
 io.on('connection', inSocket => {
   socket = inSocket;
   socket.emit("FromAPI", { data });
 
   socket.on('switchChannel',newChannel=>{
-    if(child&&child.kill)
+    if(castnowProcess&&castnowProcess.kill) castnowProcess.kill()
     console.log("Selected",newChannel);
-    child = fork(path.resolve('../../index.js'),["--address","192.168.86.201","--tomp4",newChannel]);
+    castnowProcess = fork(path.resolve('../../index.js'),["--address","192.168.86.201","--tomp4",newChannel]);
   })
 });
 
